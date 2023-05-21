@@ -1,5 +1,11 @@
 import { useState } from 'react'
 
+const Header = (props) => {
+  return (
+    <h1>{props.text}</h1>
+  );
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -16,6 +22,9 @@ const App = () => {
   const [votes, setVotes] = useState({ 0: 0, 1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0});
   const [currentVotes, setCurrentVotes] = useState(0);
 
+  let currentBestAnecdote = parseInt(Object.keys(votes).reduce((a, b) => votes[a] > votes[b] ? a : b));
+  const [bestAnecdote, setBestAnecdote] = useState(currentBestAnecdote)
+
 
   const changeAnecdotes = () => {
     let next = Math.floor(Math.random() * anecdotes.length);
@@ -26,18 +35,23 @@ const App = () => {
   const voteAnecdote = () => {
     let nextVotes = votes;
     nextVotes[selected] += 1;
+    let currentBestAnecdote = parseInt(Object.keys(nextVotes).reduce((a, b) => nextVotes[a] > nextVotes[b] ? a : b));
+    setBestAnecdote(currentBestAnecdote);
     setVotes(nextVotes);
     setCurrentVotes(nextVotes[selected]);
   }
 
   return (
     <>
-      <button onClick={changeAnecdotes}>Random</button>
-      <button onClick={voteAnecdote}>Vote</button>
+      <Header text={"Anecdote of the day"}></Header>
+      <div>{anecdotes[selected]}</div> 
       <p>This anecdote has {currentVotes} votes.</p>
-      <div>
-        {anecdotes[selected]}
-      </div>
+      <button onClick={voteAnecdote}>Vote</button>
+      <button onClick={changeAnecdotes}>Random</button>
+      <Header text={"Anecdote with most votes"}></Header>
+      <p>{anecdotes[bestAnecdote]}</p>
+      <p>This anecdote has {votes[bestAnecdote]} votes.</p>
+
     </>
 
   )
