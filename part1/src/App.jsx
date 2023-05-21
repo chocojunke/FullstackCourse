@@ -13,17 +13,24 @@ const Value = (props) => {
 }
 
 const Statistics = ({goodCounter, neutralCounter, badCounter}) => {
-  return (
-    <>
-      <Header text={"statistics"}></Header>
-      <Value text={"good"} value={goodCounter}></Value>
-      <Value text={"neutral"} value={neutralCounter}></Value>
-      <Value text={"bad"} value={goodCounter}></Value>
-      <Value text={"all"} value={goodCounter + neutralCounter + goodCounter}></Value>
-      <Value text={"average"} value={(goodCounter * 1 + neutralCounter * 0 + badCounter * (-1))/(goodCounter + neutralCounter + badCounter)}></Value>
-      <Value text={"positive"} value={(goodCounter)/(goodCounter + neutralCounter + badCounter) * 100}></Value>
-    </>
-  )
+  if ((goodCounter + neutralCounter + badCounter) !== 0) {
+    return (
+      <>
+        <Header text={"statistics"}></Header>
+        <Value text={"good"} value={goodCounter}></Value>
+        <Value text={"neutral"} value={neutralCounter}></Value>
+        <Value text={"bad"} value={goodCounter}></Value>
+        <Value text={"all"} value={goodCounter + neutralCounter + goodCounter}></Value>
+        <Value text={"average"} value={(goodCounter * 1 + neutralCounter * 0 + badCounter * (-1))/(goodCounter + neutralCounter + badCounter)}></Value>
+        <Value text={"positive"} value={(goodCounter)/(goodCounter + neutralCounter + badCounter) * 100}></Value>
+      </>
+    )
+  } else {
+    return (
+      <p>No feedback given.</p>
+    )
+  }
+
 
 }
 
