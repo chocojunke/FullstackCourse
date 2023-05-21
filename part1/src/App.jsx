@@ -39,6 +39,9 @@ const App = () => {
       <Value text={"good"} value={goodFeebackCounter}></Value>
       <Value text={"neutral"} value={neutralFeebackCounter}></Value>
       <Value text={"bad"} value={badFeebackCounter}></Value>
+      <Value text={"all"} value={goodFeebackCounter + neutralFeebackCounter + badFeebackCounter}></Value>
+      <Value text={"average"} value={(goodFeebackCounter * 1 + neutralFeebackCounter * 0 + badFeebackCounter * (-1))/(goodFeebackCounter + neutralFeebackCounter + badFeebackCounter)}></Value>
+      <Value text={"positive"} value={(goodFeebackCounter)/(goodFeebackCounter + neutralFeebackCounter + badFeebackCounter) * 100}></Value>
 
     </div>
   )
