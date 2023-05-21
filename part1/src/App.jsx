@@ -6,7 +6,7 @@ const Header = (props) => {
   );
 }
 
-const Value = (props) => {
+const StatisticLine = (props) => {
   return (
     <p>{props.text} {props.value}</p>
   );
@@ -17,12 +17,12 @@ const Statistics = ({goodCounter, neutralCounter, badCounter}) => {
     return (
       <>
         <Header text={"statistics"}></Header>
-        <Value text={"good"} value={goodCounter}></Value>
-        <Value text={"neutral"} value={neutralCounter}></Value>
-        <Value text={"bad"} value={goodCounter}></Value>
-        <Value text={"all"} value={goodCounter + neutralCounter + goodCounter}></Value>
-        <Value text={"average"} value={(goodCounter * 1 + neutralCounter * 0 + badCounter * (-1))/(goodCounter + neutralCounter + badCounter)}></Value>
-        <Value text={"positive"} value={(goodCounter)/(goodCounter + neutralCounter + badCounter) * 100}></Value>
+        <StatisticLine text={"good"} value={goodCounter}></StatisticLine>
+        <StatisticLine text={"neutral"} value={neutralCounter}></StatisticLine>
+        <StatisticLine text={"bad"} value={goodCounter}></StatisticLine>
+        <StatisticLine text={"all"} value={goodCounter + neutralCounter + goodCounter}></StatisticLine>
+        <StatisticLine text={"average"} value={(goodCounter * 1 + neutralCounter * 0 + badCounter * (-1))/(goodCounter + neutralCounter + badCounter)}></StatisticLine>
+        <StatisticLine text={"positive"} value={(goodCounter)/(goodCounter + neutralCounter + badCounter) * 100}></StatisticLine>
       </>
     )
   } else {
