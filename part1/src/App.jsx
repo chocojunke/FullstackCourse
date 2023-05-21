@@ -1,51 +1,46 @@
+import { useState } from 'react';
+
 const Header = (props) => {
   return (
-    <h1>{props.course}</h1>
+    <h1>{props.text}</h1>
   );
 }
 
-const Part = (props) => {
+const Value = (props) => {
   return (
-    <>
-      <p>
-        {props.part} {props.exercises}
-      </p>
-    </>
-  );
-}
-
-const Content = (props) => {
-  return (
-    <>
-      <Part part={props.part1} exercises={props.exercises1}></Part>
-      <Part part={props.part2} exercises={props.exercises2}></Part>
-      <Part part={props.part3} exercises={props.exercises3}></Part>
-    </>
-  );
-}
-
-const Total = (props) => {
-  return (
-    <>
-      <p>Number of exercises {props.exercises1 + props.exercises2 + props.exercises3}</p>
-    </>
+    <p>{props.text} {props.value}</p>
   );
 }
 
 const App = () => {
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const [goodFeebackCounter, setGoodFeebackCounter] = useState(0)
+  const [neutralFeebackCounter, setNeutralFeebackCounter] = useState(0)
+  const [badFeebackCounter, setBadFeebackCounter] = useState(0)
+
+  const handleGoodFeedback = () =>  {
+    setGoodFeebackCounter(goodFeebackCounter + 1);
+  }
+
+  const handleNeutralFeedback = () =>  {
+    setNeutralFeebackCounter(neutralFeebackCounter + 1);
+  }
+
+  const handleBadFeedback = () =>  {
+    setBadFeebackCounter(badFeebackCounter + 1);
+  }
 
   return (
-    <>
-      <Header course='Half Stack application development'></Header>
-      <Content part1={part1} exercises1={exercises1} part2={part2} exercises2={exercises2} part3={part3} exercises3={exercises3}></Content>
-      <Total exercises1={exercises1} exercises2={exercises2} exercises3={exercises3}></Total>
-    </>
+    <div>
+      <Header text={"give feedback"}></Header>
+      <button onClick={handleGoodFeedback}>good</button>
+      <button onClick={handleNeutralFeedback}>neutral</button>
+      <button onClick={handleBadFeedback}>bad</button>
+      <Header text={"statistics"}></Header>
+      <Value text={"good"} value={goodFeebackCounter}></Value>
+      <Value text={"neutral"} value={neutralFeebackCounter}></Value>
+      <Value text={"bad"} value={badFeebackCounter}></Value>
+
+    </div>
   )
 }
 
