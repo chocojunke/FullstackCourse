@@ -12,6 +12,21 @@ const Value = (props) => {
   );
 }
 
+const Statistics = ({goodCounter, neutralCounter, badCounter}) => {
+  return (
+    <>
+      <Header text={"statistics"}></Header>
+      <Value text={"good"} value={goodCounter}></Value>
+      <Value text={"neutral"} value={neutralCounter}></Value>
+      <Value text={"bad"} value={goodCounter}></Value>
+      <Value text={"all"} value={goodCounter + neutralCounter + goodCounter}></Value>
+      <Value text={"average"} value={(goodCounter * 1 + neutralCounter * 0 + badCounter * (-1))/(goodCounter + neutralCounter + badCounter)}></Value>
+      <Value text={"positive"} value={(goodCounter)/(goodCounter + neutralCounter + badCounter) * 100}></Value>
+    </>
+  )
+
+}
+
 const App = () => {
   const [goodFeebackCounter, setGoodFeebackCounter] = useState(0)
   const [neutralFeebackCounter, setNeutralFeebackCounter] = useState(0)
@@ -35,14 +50,7 @@ const App = () => {
       <button onClick={handleGoodFeedback}>good</button>
       <button onClick={handleNeutralFeedback}>neutral</button>
       <button onClick={handleBadFeedback}>bad</button>
-      <Header text={"statistics"}></Header>
-      <Value text={"good"} value={goodFeebackCounter}></Value>
-      <Value text={"neutral"} value={neutralFeebackCounter}></Value>
-      <Value text={"bad"} value={badFeebackCounter}></Value>
-      <Value text={"all"} value={goodFeebackCounter + neutralFeebackCounter + badFeebackCounter}></Value>
-      <Value text={"average"} value={(goodFeebackCounter * 1 + neutralFeebackCounter * 0 + badFeebackCounter * (-1))/(goodFeebackCounter + neutralFeebackCounter + badFeebackCounter)}></Value>
-      <Value text={"positive"} value={(goodFeebackCounter)/(goodFeebackCounter + neutralFeebackCounter + badFeebackCounter) * 100}></Value>
-
+      <Statistics goodCounter={goodFeebackCounter} badCounter={badFeebackCounter} neutralCounter={neutralFeebackCounter}></Statistics>
     </div>
   )
 }
