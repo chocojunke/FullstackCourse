@@ -9,6 +9,40 @@ const Person = ({persons, filter}) => {
   )
 }
 
+const Filter = ({ filter, updateFilter }) => {
+
+  return (
+    <>
+      Filter with: <input
+                    value={filter}
+                    onChange={updateFilter}
+                  />
+    </>
+  )
+}
+
+const PersonForm = ({ newName, newNumber, updateName, updateNumber, saveContact }) => {
+  return (
+    <form>
+      <div>
+        name: <input 
+                value={newName}
+                onChange={updateName}
+              />
+      </div>
+      <div>
+        number: <input 
+                value={newNumber}
+                onChange={updateNumber}
+              />
+      </div>
+      <div>
+        <button onClick={saveContact}>add</button>
+      </div>
+    </form>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -48,30 +82,9 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter with <input
-                      value={filter}
-                      onChange={updateFilter}
-                    />
-      </div>
+      <Filter filter={filter} updateFilter={updateFilter}/>
       <h2>Add a new one</h2>
-      <form>
-        <div>
-          name: <input 
-                  value={newName}
-                  onChange={updateName}
-                />
-        </div>
-        <div>
-          number: <input 
-                  value={newNumber}
-                  onChange={updateNumber}
-                />
-        </div>
-        <div>
-          <button onClick={saveContact}>add</button>
-        </div>
-      </form>
+      <PersonForm newName={newName} newNumber={newNumber} updateName={updateName} updateNumber={updateNumber} saveContact={saveContact}/>
       <h2>Numbers</h2>
       <Person persons={persons} filter={filter}></Person>
     </div>
