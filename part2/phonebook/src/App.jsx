@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import personService from './services/services.js'
+import './index.css'
 
 const Person = ({persons, filter, deletePerson}) => {
 
@@ -54,12 +55,38 @@ const PersonForm = ({ newName, newNumber, updateName, updateNumber, saveContact 
   )
 }
 
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className='notification'>
+      {message}
+    </div>
+  )
+}
+
+const Error = ({ message }) => {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className='error'>
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([])
 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filter, setNewFilter] = useState('')
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     personService
@@ -79,11 +106,8 @@ const App = () => {
           setPersons(persons.filter(element => element.id !== id))
         })
     }
-    else
-    {
-        // They clicked no
-    }
   }
+  
   const updateName = (event) => {
     event.preventDefault();
     setNewName(event.target.value);
@@ -107,6 +131,10 @@ const App = () => {
       personService
         .create(person)
         .then((object) => {
+          setMessage(object.name + " contact was added !");
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
           setPersons(persons.concat(object));
         })
     } else {
@@ -118,7 +146,17 @@ const App = () => {
           personService
             .update(oldPerson.id, newPerson)
             .then((data) => {
+              setMessage(data.name + " contact was modified !");
+              setTimeout(() => {
+                setMessage(null)
+              }, 5000)
               setPersons(persons.map(element => element.name === newName ? data : element))
+            })
+            .catch(() => {
+              setError("Information of " + oldPerson.name + " was not present in the server !");
+              setTimeout(() => {
+                setError(null)
+              }, 5000)
             })
         }
     }
@@ -127,6 +165,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message}></Notification>
+      <Error message={error}></Error>
       <Filter filter={filter} updateFilter={updateFilter}/>
       <h2>Add a new one</h2>
       <PersonForm newName={newName} newNumber={newNumber} updateName={updateName} updateNumber={updateNumber} saveContact={saveContact}/>
