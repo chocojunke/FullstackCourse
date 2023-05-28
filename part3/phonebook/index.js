@@ -48,7 +48,9 @@ app.get('/api/persons/:id', (request, response) => {
 app.post('/api/persons', (request, response) => {
 
     if (!request.body.name || !request.body.number) {
-        return response.status(404).send();
+        return response.status(400).json({ error: 'name or number missing' });
+    } else if (phonebook.find(elem => elem.name === request.body.name)) {
+        return response.status(400).json({ error: 'name must be unique' });
     }
 
     const person = {
