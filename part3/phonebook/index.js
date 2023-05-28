@@ -1,4 +1,6 @@
 const express = require('express');
+var morgan = require('morgan');
+
 const app = express();
 
 app.use(express.json());
@@ -28,7 +30,13 @@ let phonebook = [
 
 const generateId = () => {
     return Math.floor((Math.random() * 1_000_000));
-  }
+}
+
+app.use(morgan('tiny'))
+
+app.get('/', function (req, res) {
+  res.send('hello, world!')
+})
 
 app.get('/api/persons', (request, response) => {
     response.send(phonebook);
